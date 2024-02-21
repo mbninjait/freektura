@@ -1,0 +1,310 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header,
+footer {
+    text-align: center;
+    padding: 1em;
+    background-color: #f4f4f4;
+}
+
+main {
+    width: 90%;
+    max-width: 1000px;
+    margin: 2em auto;
+    padding: 1em;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 0.25em;
+}
+
+#seller-data,
+#customer-data {
+    width: 50%;
+}
+
+.main-header input,
+.main-header .comboBox {
+    width: 100%;
+    padding: 0.5em;
+    margin: 0.5em 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.flex-div {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: flex-start;
+}
+
+.flex-div .checkbox {
+    margin-right: 1em;
+}
+
+#invoice-header-table td {
+    padding: 1em;
+    box-sizing: border-box;
+}
+
+.address-subtable {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.company-person-container {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: flex-start;
+}
+
+.company-person-container input,
+.company-person-container label {
+    width: fit-content;
+    margin-right: 1em;
+}
+
+.address-subtable input,
+.address-subtable label {
+    margin-right: 1em;
+}
+
+.address-subtable .address-street {
+    width: 60%;
+}
+
+.address-subtable .address-building-no,
+.address-subtable .address-apartment-no {
+    width: 20%;
+}
+
+.address-subtable .address-city {
+    width: 70%;
+}
+
+.address-subtable .address-zip {
+    width: 30%;
+}
+
+.newline-btn {
+    width: 100%;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.wide-btn {
+    width: 100%;
+    padding: 0.5em;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.small-btn {
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: large;
+}
+
+.newline-btn:hover,
+.wide-btn:hover,
+.small-btn:hover {
+    background-color: #77b7fc;
+    color: black;
+}
+
+#invoice-lines-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.invoice-line input,
+.invoice-line-tfoot input,
+.invoice-line .comboBox {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* INVOICE LINE TABLE HEADER */
+thead {
+    background-color: #007bff;
+}
+
+th.lp {
+    width: 5%;
+    padding: 0.5em 0;
+    font-size: small;
+    background-color: #007bff;
+    color: white;
+    text-align: left;
+}
+
+th.item-name {
+    width: 24%;
+    padding: 0.5em 0;
+    font-size: small;
+    background-color: #007bff;
+    color: white;
+    text-align: left
+}
+
+th.quan {
+    width: 11%;
+    padding: 0.5em 0;
+    font-size: small;
+    background-color: #007bff;
+    color: white;
+    text-align: left;
+}
+
+th.um {
+    width: 5%;
+    padding: 0.5em 0;
+    font-size: small;
+    background-color: #007bff;
+    color: white;
+    text-align: left;
+}
+
+th.net-price {
+    width: 11%;
+    padding: 0.5em 0;
+    font-size: small;
+    background-color: #007bff;
+    color: white;
+    text-align: left;
+}
+
+th.net-amount {
+    width: 11%;
+    padding: 0.5em 0;
+    font-size: small;
+    background-color: #007bff;
+    color: white;
+    text-align: left;
+}
+
+th.vat-rate {
+    width: 11%;
+    padding: 0.5em 0;
+    font-size: small;
+    background-color: #007bff;
+    color: white;
+    text-align: left;
+}
+
+th.gross-price {
+    width: 11%;
+    padding: 0.5em 0;
+    font-size: small;
+    background-color: #007bff;
+    color: white;
+    text-align: left;
+}
+
+th.gross-amount {
+    width: 11%;
+    padding: 0.5em 0;
+    font-size: small;
+    background-color: #007bff;
+    color: white;
+    text-align: left;
+}
+
+.error {
+    background-color: #b00020;
+    color: white;
+}
+
+/* CHECKBOX */
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #007bff;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #007bff;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(16px);
+    -ms-transform: translateX(16px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 24px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}

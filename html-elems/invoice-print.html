@@ -1,0 +1,338 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl">
+
+<head>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Roboto", -apple-system, "San Francisco", "Segoe UI", "Helvetica Neue", sans-serif;
+            font-size: 12pt;
+            background-color: #eee;
+        }
+
+        * {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+
+        .page {
+            margin: 1cm auto;
+            background: #fff;
+            box-shadow: 0 4px 5px rgba(75, 75, 75, 0.2);
+            outline: 0;
+        }
+
+        div.page-break {
+            page-break-after: always;
+        }
+
+        @media screen {
+
+            div.page-break::before {
+                content: "";
+                display: block;
+                height: 0.8cm;
+                margin-left: 0.5cm;
+                margin-right: 0.5cm;
+                background-color: #fff;
+                box-shadow: 0 6px 5px rgba(75, 75, 75, 0.2);
+            }
+
+            div.page-break {
+                display: block;
+                height: 1.8cm;
+                margin-left: -2.5cm;
+                margin-right: -2.5cm;
+                margin-top: 1.2cm;
+                margin-bottom: 2cm;
+                background: #eee;
+            }
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            page-break-after: avoid;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        p+p {
+            margin-top: 0.5cm;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        table {
+            page-break-inside: avoid;
+        }
+
+        .page {
+            width: 21.6cm;
+            min-height: 27.9cm;
+
+            padding-left: 2cm;
+            padding-top: 2cm;
+            padding-right: 2cm;
+            padding-bottom: 2cm;
+        }
+
+        @page {
+            size: letter portrait;
+            margin-left: 2cm;
+            margin-top: 2cm;
+            margin-right: 2cm;
+            margin-bottom: 2cm;
+        }
+
+        @media print {
+
+            html,
+            body {
+                background-color: #fff;
+            }
+
+            .page {
+                width: initial !important;
+                min-height: initial !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                border: initial !important;
+                border-radius: initial !important;
+                background: initial !important;
+                box-shadow: initial !important;
+                page-break-after: always;
+            }
+        }
+
+        body h1,
+        body h2 {
+            text-align: center;
+            font-weight: normal;
+        }
+
+        .separator {
+            width: 21cm;
+        }
+
+        .invoice-lines,
+        .invoice-lines th,
+        .invoice-lines td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        .dates,
+        .seller-data,
+        .customer-data,
+        .payment-data {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            width: 300px;
+        }
+
+        td.dates .label-div,
+        td.seller-data .label-div,
+        td.customer-data .label-div {
+            width: 100%;
+            background-color: lightgrey;
+            text-align: center;
+        }
+
+        td.dates div {
+            width: 100%;
+            text-align: center;
+        }
+
+        .label-div label {
+            font-weight: bold;
+        }
+
+        .invoice-lines {
+            width: 100%;
+            table-layout: fixed;
+            font-size: small;
+        }
+
+        .invoice-lines th {
+            background-color: lightgrey;
+        }
+
+        footer {
+            text-align: center;
+        }
+
+        .summary-table label {
+            font-weight: bold;
+        }
+
+        /* INVOICE LINE TABLE HEADER */
+        th.lp {
+            width: 5%;
+        }
+
+        th.item-name {
+            width: 24%;
+        }
+
+        th.quan {
+            width: 11%;
+        }
+
+        th.um {
+            width: 5%;
+        }
+
+        th.net-price {
+            width: 11%;
+        }
+
+        th.net-amount {
+            width: 11%;
+        }
+
+        th.vat-rate {
+            width: 11%;
+        }
+
+        th.gross-price {
+            width: 11%;
+        }
+
+        th.gross-amount {
+            width: 11%;
+        }
+
+        .watermark-on {
+            display: table;
+            margin: 0 auto;
+            font-size: xx-large;
+            color: lightgray;
+        }
+
+        .watermark-off {
+            visibility: hidden;
+        }
+
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faktura</title>
+</head>
+
+<body class="document" id="invoice">
+    <div class="page">
+        <span id="test-print" class="watermark-on watermark-off">Wydruk próbny</span>
+        <table class="header-table">
+            <tbody>
+                <tr>
+                    <td class="logo" colspan="1">
+                        <img id="logo-img" src="" alt="Logo" width=200>
+                    </td>
+                    <td class="separator"></td>
+                    <td class="dates" colspan="1">
+                        <div class="label-div">
+                            <label for="post-date">Data wystawienia</label>
+                        </div>
+                        <div id="post-date"></div>
+                        <div class="label-div">
+                            <label for="sell-date">Data sprzedaży</label>
+                        </div>
+                        <div id="sell-date"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="seller-data" colspan="1">
+                        <div class="label-div">
+                            <label>Sprzedawca</label>
+                        </div>
+                        <span id="seller-name"></span>
+                        <span id="seller-nip-or-pesel"></span>
+                        <span id="seller-address1"></span>
+                        <span id="seller-address2"></span>
+                    </td>
+                    <td class="separator"></td>
+                    <td class="customer-data" colspan="1">
+                        <div class="label-div">
+                            <label>Nabywca</label>
+                        </div>
+                        <span id="customer-name"></span>
+                        <span id="customer-nip-or-pesel"></span>
+                        <span id="customer-address1"></span>
+                        <span id="customer-address2"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h1 id="invoice-id"></h1>
+        <br>
+        <table class="invoice-lines">
+            <thead>
+            </thead>
+        </table>
+        <br>
+        <span id="no-vat" style="font-size: small;"></span>
+        <br>
+        <br>
+        <br>
+        <table class="summary-table">
+            <tbody>
+                <tr>
+                    <td class="payment-data">
+                        <div>
+                            <label for="payment-method">Sposób zapłaty</label>
+                            <span id="payment-method">Przelew na konto</span>
+                        </div>
+                        <div>
+                            <label for="payment-due-date">Termin płatności</label>
+                            <span id="payment-due-date"></span>
+                        </div>
+                        <span id="acc-no"></span>
+                    </td>
+                    <td class="separator"></td>
+                    <td class="payment-data">
+                        <div id="upfront-payment">
+                            <label for="upfront-payment-amount">Przedpłacono</label>
+                            <span id="upfront-payment-amount"></span>
+                        </div>
+                        <div>
+                            <label for="amount-due">Do zapłaty</label>
+                            <span id="amount-due"></span>
+                        </div>
+                        <label for="amount-due-text">Słownie</label>
+                        <span id="amount-due-text"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function saveAsHtml() {
+            const fileName = 'Faktura.html'
+            const htmlString = new XMLSerializer().serializeToString(document)
+            const blob = new Blob([htmlString], { type: 'text/html' })
+            const link = document.createElement('a')
+            link.href = URL.createObjectURL(blob)
+            link.download = fileName
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+            URL.revokeObjectURL(link.href)
+        }
+
+        saveAsHtml()
+    </script>
+</body>
+
+</html>

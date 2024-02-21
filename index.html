@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freektura</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Freektura</h1>
+        <h3>Wystaw fakturę za darmo i bez rejestracji!</h3>
+    </header>
+    <main>
+        <form id="invoice-form">
+            <section id="invoice-header">
+
+                <!--Nagłówek faktury-->
+                <table id="invoice-header-table">
+                    <tr>
+                        <td class="main-header" colspan="1">
+                            <label for="invoice-type">Tytuł dokumentu</label>
+                            <select id="invoice-type" class="comboBox">
+                                <option value="Faktura">Faktura</option>
+                                <option value="Faktura VAT">Faktura VAT</option>
+                                <option value="Faktura proforma">Faktura proforma</option>
+                                <option value="Faktura zaliczkowa">Faktura zaliczkowa</option>
+                            </select>
+                        </td>
+                        <td class="main-header" colspan="1">
+                            <label for="invoice-id">Numer faktury</label>
+                            <input type="text" id="invoice-id" placeholder="np. FS/01/24/0001" required>
+                        </td>
+                        <td class="main-header" colspan="1">
+                            <label for="logo">Logo twojej firmy</label>
+                            <input type="file" id="logo-upload" name="logo" accept="image/*">
+                        </td>
+                        <td class="main-header" colspan="1">
+                            <label for="test-print-switch-label">Wydruk próbny</label>
+                            <label id="test-print-switch-label" class="switch">
+                                <input id="test-print-switch" type="checkbox">
+                                <span class="slider round"></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="main-header" colspan="1">
+                            <label for="payment-method">Metoda płatności</label>
+                            <select id="payment-method" class="comboBox" onchange="toggleAccNoDisplay()">
+                                <option value="Przelew na konto">Przelew na konto</option>
+                                <option value="Gotówka">Gotówka</option>
+                            </select>
+                        </td>
+                        <td class="main-header" colspan="1">
+                            <label for="curr-id">Waluta</label>
+                            <select id="curr-id" class="comboBox">
+                                <option value="PLN">Polski złoty (PLN)</option>
+                            </select>
+                        </td>
+                        <td class="main-header" colspan="1">
+                            <label for="post-date">Data wystawienia</label>
+                            <input type="date" id="post-date" required>
+                        </td>
+                        <td class="main-header" colspan="1">
+                            <label for="sell-date">Data sprzedaży</label>
+                            <input type="date" id="sell-date" required>
+                        </td>
+                    </tr>
+                    <td class="main-header" id="acc-no-td" colspan="2">
+                        <label for="acc-no">Numer konta do przelewu</label>
+                        <input type="text" id="acc-no"
+                            placeholder="Nr konta IBAN (np. 96 1284 1992 9493 8338 1307 1720 5081)">
+                    </td>
+                    <td class="main-header" colspan="1">
+                        <label for="payment-due-date">Termin płatności</label>
+                        <input type="date" id="payment-due-date" required>
+                    </td>
+                    <td class="main-header" colspan="1">
+                        <label for="upfront-payment-amount">Zapłacono z góry:</label>
+                        <input type="number" id="upfront-payment-amount" placeholder="0.00" min="0" step="0.01">
+                    </td>
+                    <tr>
+                    </tr>
+                    <br>
+                    <tr>
+                        <!--Dane sprzedawcy-->
+                        <td class="main-header" id="seller-data" colspan="2">
+                            <label>Sprzedawca</label>
+                            <br>
+
+                            <div class="company-person-container">
+                                <input type="radio" id="seller-company-btn" name="seller" value="company"
+                                    onchange="toggleSellerCompanyInputs()" checked>
+                                <label id="seller-company-label" for="company">Firma</label>
+                                <input type="radio" id="seller-person-btn" name="seller" value="person"
+                                    onchange="toggleSellerPersonInputs()">
+                                <label id="seller-person-label" for="person">Osoba</label>
+                            </div>
+
+                            <input type="text" id="seller-company-name" placeholder="Nazwa firmy">
+                            <input type="text" id="seller-person-name" placeholder="Imię i nazwisko">
+
+                            <label id="seller-nip-label" for="seller-nip">NIP</label>
+                            <div id="seller-nip-div" class="flex-div">
+                                <input type="text" id="seller-nip"
+                                    placeholder="Wpisz NIP i wciśnij przycisk by pobrać dane z GUS-u">
+                                <button type="button" class="small-btn" onclick="getSellerDataFromGUS()"
+                                    title="Pobierz dane z GUS-u na podstawie NIP">&#10176;</button>
+                            </div>
+
+                            <label id="seller-pesel-label" for="seller-pesel">PESEL</label>
+                            <input type="text" id="seller-pesel" placeholder="PESEL nabywcy">
+
+                            <label for="seller-address">Adres</label>
+                            <div class="address-subtable">
+                                <input type="text" class="address-street" id="seller-address-street"
+                                    placeholder="Ulica">
+                                <input type="text" class="address-building-no" id="seller-address-building-no"
+                                    placeholder="Nr budynku">
+                                <label>/</label>
+                                <input type="text" class="address-apartment-no" id="seller-address-apartment-no"
+                                    placeholder="Nr lokalu">
+                            </div>
+                            <div class="address-subtable">
+                                <input type="text" class="address-city" id="seller-address-city" placeholder="Miasto">
+                                <input type="text" class="address-zip" id="seller-address-zip" pattern="\d{2}-\d{3}"
+                                    placeholder="Kod pocztowy">
+                            </div>
+                        </td>
+
+                        <!--Dane nabywcy-->
+                        <td class="main-header" id="customer-data" colspan="2">
+                            <label>Nabywca</label>
+                            <br>
+
+                            <div class="company-person-container">
+                                <input type="radio" id="customer-company-btn" name="customer" value="company"
+                                    onchange="toggleCustomerCompanyInputs()" checked>
+                                <label for="company">Firma</label>
+                                <input type="radio" id="customer-person-btn" name="customer" value="person"
+                                    onchange="toggleCustomerPersonInputs()">
+                                <label for="person">Osoba</label>
+                            </div>
+                            <input type="text" id="customer-company-name" placeholder="Nazwa firmy">
+                            <input type="text" id="customer-person-name" placeholder="Imię i nazwisko">
+
+                            <label id="customer-nip-label" for="customer-nip">NIP</label>
+                            <div id="customer-nip-div" class="flex-div">
+                                <input type="text" id="customer-nip"
+                                    placeholder="Wpisz NIP i wciśnij przycisk by pobrać dane z GUS-u">
+                                <button type="button" class="small-btn" onclick="getCustDataFromGUS()"
+                                    title="Pobierz dane z GUS-u na podstawie NIP">&#10176;</button>
+                            </div>
+
+                            <label id="customer-pesel-label" for="customer-pesel">PESEL</label>
+                            <input type="text" id="customer-pesel" placeholder="PESEL nabywcy">
+
+                            <label for="customer-address">Adres</label>
+                            <div class="address-subtable">
+                                <input type="text" class="address-street" id="customer-address-street"
+                                    placeholder="Ulica">
+                                <input type="text" class="address-building-no" id="customer-address-building-no"
+                                    placeholder="Nr budynku">
+                                <label>/</label>
+                                <input type="text" class="address-apartment-no" id="customer-address-apartment-no"
+                                    placeholder="Nr lokalu">
+                            </div>
+                            <div class="address-subtable">
+                                <input type="text" class="address-city" id="customer-address-city" placeholder="Miasto">
+                                <input type="text" class="address-zip" id="customer-address-zip" pattern="\d{2}-\d{3}"
+                                    required placeholder="Kod pocztowy">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="flex-div">
+                                <input type="checkbox" id="no-vat" class="checkbox">
+                                <label type="text" for="no-vat">Dołącz przypis o podstawie prawnej zwolnienia z
+                                    VAT</label>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </section>
+
+            <!--Wiersze faktury-->
+            <section id="invoice-lines">
+                <table id="invoice-lines-table">
+                    <thead>
+                        <tr>
+                            <th class="lp">&ThinSpace;</th>
+                            <th class="item-name">Nazwa towaru lub usługi</th>
+                            <th class="quan">Ilość</th>
+                            <th class="um">J.m.</th>
+                            <th class="net-price">Cena netto</th>
+                            <th class="net-amount">Kwota netto</th>
+                            <th class="vat-rate">Stawka VAT [%]</th>
+                            <th class="gross-price">Cena brutto</th>
+                            <th class="gross-amount">Kwota brutto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                        <tr class="invoice-line-tfoot">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Łącznie netto:</td>
+                            <td><input id="total-net-amount" type="text" readonly></td>
+                            <td></td>
+                            <td>Łącznie brutto:</td>
+                            <td><input id="total-gross-amount" type="text" readonly></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <button type="button" class="newline-btn" onclick="insertInvoiceLine()" title="Dodaj wiersz">+</button>
+            </section>
+            <br>
+            <button type="submit" class="wide-btn" onclick="generateInvoice()">Generuj fakturę!</button>
+        </form>
+    </main>
+
+    <script src="./renderer.js"></script>
+</body>
+
+</html>
