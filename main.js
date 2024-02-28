@@ -22,7 +22,6 @@ const createWindow = () => {
   win.maximize()
   win.show()
   win.loadFile('index.html')
-  win.webContents.openDevTools()
 }
 
 app.whenReady().then(() => {

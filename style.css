@@ -47,13 +47,18 @@ label {
     justify-content: flex-start;
 }
 
+.centering-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .flex-div .checkbox {
     margin-right: 1em;
 }
 
 #invoice-header-table td {
     padding: 1em;
-    box-sizing: border-box;
 }
 
 .address-subtable {
@@ -99,7 +104,8 @@ label {
 }
 
 .newline-btn {
-    width: 100%;
+    width: 25%;
+    align-items: center;
     border: none;
     background-color: #007bff;
     color: white;
