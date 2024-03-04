@@ -550,8 +550,6 @@ function generateInvoice() {
                 var amountDue = totalGrossAmount
             }
 
-            //TODO
-
             invoice.getElementById('amount-due').innerHTML = amountDue + ' ' + document.getElementById('curr-id').value
             invoice.getElementById('amount-due-text').innerHTML = amountToTextPLN(amountDue)
 
