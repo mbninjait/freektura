@@ -80,8 +80,8 @@ function formatIBAN(iban) {
 }
 
 function formatNIP(nip) {
-    // Remove existing spaces and non-alphanumeric characters
-    return nip = nip.replace(/[^A-Z0-9]/ig, '')
+    // Remove existing spaces and non-numeric characters
+    return nip.replace(/[^0-9]/ig, '')
 }
 
 async function sendSoapRequest(url, soapEnvelope, sessionId) {
@@ -796,6 +796,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function handleNIPValidation(input) {
+        const formattedNip = formatNIP(input.value)
+
+        if (input.value != '')
+            input.value = formattedNip
         isValidNIP(input.value) ? input.classList.remove('error') : input.classList.add('error')
     }
 
