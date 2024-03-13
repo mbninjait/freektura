@@ -765,7 +765,7 @@ document.getElementById("invoice-form").addEventListener("submit", (event) => {
     event.preventDefault() 
 })
 
-document.getElementById('logo-upload').addEventListener('change', function () {
+document.getElementById('logo-upload').addEventListener('change', () => {
     const file = this.files[0]
     const maxSize = 5 * 1024 * 1024 // 5MiB
 
