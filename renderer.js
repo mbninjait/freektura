@@ -453,8 +453,8 @@ function generateInvoice() {
     //Checking if all required fields were filled by user
     const form = document.getElementById('invoice-form')
 
-    if (!form.checkValidity())
-        return
+    //if (!form.checkValidity())
+    //    return
 
     fetch('./html-elems/invoice-print.html')
         .then(response => {
@@ -522,17 +522,7 @@ function generateInvoice() {
             )
 
             //Logo
-            const fileInput = document.getElementById('logo-upload')
-            if (fileInput.files.length > 0) {
-                const reader = new FileReader()
-                reader.onload = (e) => {
-                    const imageUri = e.target.result
-                    localStorage.setItem('imageUri', imageUri)
-                }
-
-                reader.readAsDataURL(fileInput.files[0])
-                invoice.getElementById('logo-img').src = localStorage.getItem('imageUri')
-            }
+            invoice.getElementById('logo-img').src = localStorage.getItem('imageUri')
 
             //Amount due
             let totalGrossAmount = 0
@@ -764,6 +754,7 @@ async function getDataFromGUS(NIP) {
 }
 
 /* CODE EXECUTION STARTS HERE */
+localStorage.clear()
 insertInvoiceLine()
 updateSums()
 toggleSellerCompanyInputs()
@@ -776,6 +767,17 @@ document.getElementById('logo-upload').addEventListener('change', function () {
     if (file.size > maxSize) {
         alert('Rozmiar pliku przekracza 5MB. Proszę wybrać nieco mniejszy obrazek')
         this.value = ''
+    }
+    else {
+        const fileInput = document.getElementById('logo-upload')
+        if (fileInput.files.length > 0) {
+            const reader = new FileReader()
+            reader.onload = (e) => {
+                const imageUri = e.target.result
+                localStorage.setItem('imageUri', imageUri)
+            }
+            reader.readAsDataURL(fileInput.files[0])
+        }
     }
 })
 
