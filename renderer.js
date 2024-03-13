@@ -453,8 +453,8 @@ function generateInvoice() {
     //Checking if all required fields were filled by user
     const form = document.getElementById('invoice-form')
 
-    //if (!form.checkValidity())
-    //    return
+    if (!form.checkValidity())
+        return
 
     fetch('./html-elems/invoice-print.html')
         .then(response => {
@@ -760,6 +760,11 @@ updateSums()
 toggleSellerCompanyInputs()
 toggleCustomerCompanyInputs()
 
+//Preventing invoice-form to clear it's inputs after submitting
+document.getElementById("invoice-form").addEventListener("submit", (event) => {
+    event.preventDefault() 
+})
+
 document.getElementById('logo-upload').addEventListener('change', function () {
     const file = this.files[0]
     const maxSize = 5 * 1024 * 1024 // 5MiB
@@ -824,7 +829,3 @@ document.addEventListener('DOMContentLoaded', function () {
     customerNIPInput.addEventListener('focus', () => customerNIPInput.classList.remove('error'))
     customerNIPInput.addEventListener('blur', () => handleNIPValidation(customerNIPInput))
 })
-
-
-
-
