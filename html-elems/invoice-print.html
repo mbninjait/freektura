@@ -227,7 +227,7 @@
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faktura</title>
+    <title id="doc-title">Faktura</title>
 </head>
 
 <body class="document" id="invoice">
@@ -319,7 +319,7 @@
 
     <script>
         function saveAsHtml() {
-            const fileName = 'Faktura.html'
+            const fileName = document.getElementById('doc-title').innerHTML + '.html'
             const htmlString = new XMLSerializer().serializeToString(document)
             const blob = new Blob([htmlString], { type: 'text/html' })
             const link = document.createElement('a')

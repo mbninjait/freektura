@@ -521,6 +521,7 @@ function generateInvoice() {
             //Invoice Id
             const docTitle = document.getElementById('invoice-type').value + ' ' + document.getElementById('invoice-id').value
             invoice.getElementById('invoice-id').innerHTML = docTitle
+            invoice.getElementById('doc-title').innerHTML = docTitle
 
             //Other fields
             const elementIdsToCopy = [
