@@ -367,6 +367,9 @@ function updateSums() {
 /* GENERATING INVOICE */
 
 function amountToText(amount) {
+    if (amount == 0)
+        return "zero"
+
     const jednosci = ["", " jeden", " dwa", " trzy", " cztery", " pięć", " sześć", " siedem", " osiem", " dziewięć"];
     const nascie = ["", " jedenaście", " dwanaście", " trzynaście", " czternaście", " piętnaście", " szesnaście", " siedemnaście", " osiemnaście", " dziewietnaście"];
     const dziesiatki = ["", " dziesięć", " dwadzieścia", " trzydzieści", " czterdzieści", " pięćdziesiąt", " sześćdziesiąt", " siedemdziesiąt", " osiemdziesiąt", " dziewięćdziesiąt"];
@@ -449,6 +452,18 @@ function amountToTextPLN(amount) {
     return słownieZłotych + ' ' + słownieGroszy
 }
 
+async function loadLogoToLocalStorage() {
+    const fileInput = document.getElementById('logo-upload')
+    if (fileInput.files.length > 0) {
+        const reader = new FileReader()
+        reader.onload = (e) => {
+            const imageUri = e.target.result
+            localStorage.setItem('imageUri', imageUri)
+        }
+        return reader.readAsDataURL(fileInput.files[0])
+    }
+}
+
 function generateInvoice() {
     //Checking if all required fields were filled by user
     const form = document.getElementById('invoice-form')
@@ -513,8 +528,7 @@ function generateInvoice() {
                 'sell-date',
                 'payment-method',
                 'payment-due-date',
-                'acc-no',
-                'upfront-payment-amount'
+                'acc-no'
             ]
 
             elementIdsToCopy.forEach(
@@ -532,8 +546,10 @@ function generateInvoice() {
 
             const upfrontPaymentAmount = document.getElementById('upfront-payment-amount').value
 
-            if (upfrontPaymentAmount > 0)
+            if (upfrontPaymentAmount > 0) {
                 var amountDue = totalGrossAmount - upfrontPaymentAmount
+                invoice.getElementById('upfront-payment-amount').innerHTML = amountDue + ' ' + document.getElementById('curr-id').value
+            }
             else {
                 let div = invoice.getElementById('upfront-payment')
                 div.parentNode.removeChild(div)
@@ -762,27 +778,17 @@ toggleCustomerCompanyInputs()
 
 //Preventing invoice-form to clear it's inputs after submitting
 document.getElementById("invoice-form").addEventListener("submit", (event) => {
-    event.preventDefault() 
+    event.preventDefault()
+    loadLogoToLocalStorage().then(() => generateInvoice())
 })
 
-document.getElementById('logo-upload').addEventListener('change', () => {
-    const file = this.files[0]
+document.getElementById('logo-upload').addEventListener('change', (event) => {
+    const file = event.target.files[0]
     const maxSize = 5 * 1024 * 1024 // 5MiB
 
     if (file.size > maxSize) {
         alert('Rozmiar pliku przekracza 5MB. Proszę wybrać nieco mniejszy obrazek')
-        this.value = ''
-    }
-    else {
-        const fileInput = document.getElementById('logo-upload')
-        if (fileInput.files.length > 0) {
-            const reader = new FileReader()
-            reader.onload = (e) => {
-                const imageUri = e.target.result
-                localStorage.setItem('imageUri', imageUri)
-            }
-            reader.readAsDataURL(fileInput.files[0])
-        }
+        event.target.value = ''
     }
 })
 
