@@ -23,6 +23,7 @@
     "pdfjs-dist": "^4.0.379"
   },
   "dependencies": {
+    "animate.css": "^4.1.1",
     "domino": "^2.1.6",
     "electron-squirrel-startup": "^1.0.0"
   }

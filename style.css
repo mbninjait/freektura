@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif; 
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
@@ -13,8 +13,7 @@ footer {
 }
 
 main {
-    width: 90%;
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 2em auto;
     padding: 1em;
     background-color: #fff;
@@ -31,6 +30,10 @@ label {
     width: 50%;
 }
 
+.main-header {
+    width: 25%;
+}
+
 .main-header input,
 .main-header .comboBox {
     width: 100%;
@@ -44,7 +47,10 @@ label {
     display: flex;
     flex-direction: row;
     align-items: baseline;
-    justify-content: flex-start;
+}
+
+.flex-div .small-btn {
+    margin-left: 5px;
 }
 
 .centering-div {
@@ -133,13 +139,28 @@ label {
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
-    font-size: large;
+    font-size: larger;
+}
+
+.del-btn {
+    border: none;
+    background-color: #f44336; 
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: larger;
 }
 
 .newline-btn:hover,
 .wide-btn:hover,
 .small-btn:hover {
     background-color: #77b7fc;
+    color: black;
+}
+
+.del-btn:hover {
+    background-color: #ea8f8f;
     color: black;
 }
 
@@ -246,7 +267,7 @@ th.gross-amount {
 }
 
 .error {
-    background-color: #b00020;
+    background-color: #f44336; 
     color: white;
 }
 

@@ -105,9 +105,9 @@
                             <label id="seller-nip-label" for="seller-nip">NIP</label>
                             <div id="seller-nip-div" class="flex-div">
                                 <input type="text" id="seller-nip"
-                                    placeholder="Wpisz NIP i wciśnij przycisk by pobrać dane z GUS-u">
+                                    placeholder="Wpisz NIP i wciśnij strzałkę obok by pobrać dane firmy z GUS">
                                 <button type="button" class="small-btn" onclick="getSellerDataFromGUS()"
-                                    title="Pobierz dane z GUS-u na podstawie NIP">&#10176;</button>
+                                    title="Pobierz dane z GUS na podstawie NIP">&nbsp;&#x21e9;&nbsp;</button>
                             </div>
 
                             <label id="seller-pesel-label" for="seller-pesel">PESEL</label>
@@ -149,9 +149,9 @@
                             <label id="customer-nip-label" for="customer-nip">NIP</label>
                             <div id="customer-nip-div" class="flex-div">
                                 <input type="text" id="customer-nip"
-                                    placeholder="Wpisz NIP i wciśnij przycisk by pobrać dane z GUS-u">
+                                    placeholder="Wpisz NIP i wciśnij strzałkę obok by pobrać dane firmy z GUS">
                                 <button type="button" class="small-btn" onclick="getCustDataFromGUS()"
-                                    title="Pobierz dane z GUS-u na podstawie NIP">&#10176;</button>
+                                    title="Pobierz dane z GUS na podstawie NIP">&nbsp;&#x21e9;&nbsp;</button>
                             </div>
 
                             <label id="customer-pesel-label" for="customer-pesel">PESEL</label>
@@ -192,14 +192,14 @@
                     <thead>
                         <tr>
                             <th class="lp">&ThinSpace;</th>
-                            <th class="item-name">Nazwa towaru lub usługi</th>
-                            <th class="quan">Ilość</th>
-                            <th class="um">J.m.</th>
-                            <th class="net-price">Cena netto</th>
-                            <th class="net-amount">Kwota netto</th>
-                            <th class="vat-rate">Stawka VAT [%]</th>
-                            <th class="gross-price">Cena brutto</th>
-                            <th class="gross-amount">Kwota brutto</th>
+                            <th class="item-name">&nbsp;Nazwa towaru lub usługi</th>
+                            <th class="quan">&nbsp;Ilość</th>
+                            <th class="um">&nbsp;J.m.</th>
+                            <th class="net-price">&nbsp;Cena netto</th>
+                            <th class="net-amount">&nbsp;Kwota netto</th>
+                            <th class="vat-rate">&nbsp;Stawka VAT [%]</th>
+                            <th class="gross-price">&nbsp;Cena brutto</th>
+                            <th class="gross-amount">&nbsp;Kwota brutto</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -220,9 +220,12 @@
                 </table>
                 <br>
                 <div class="centering-div">
-                <button type="button" class="newline-btn" onclick="insertInvoiceLine()" title="Dodaj wiersz">+</button>
+                <button type="button" class="newline-btn" onclick="insertInvoiceLine()" title="Dodaj wiersz">&#x2b;</button>
                 </div>
             </section>
+            <br>
+            <br>
+            <br>
             <br>
             <button type="submit" class="wide-btn">Generuj fakturę!</button>
         </form>
