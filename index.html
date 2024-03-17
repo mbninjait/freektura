@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Freektura</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="animate.css">
 </head>
 
 <body>
     <header>
-        <h1>Freektura</h1>
-        <h3>Wystaw fakturę za darmo i bez rejestracji!</h3>
+        <h1 class="animate__animated animate__zoomIn">Freektura</h1>
+        <h3 class="animate__animated animate__zoomIn">Wystaw fakturę za darmo i bez rejestracji!</h3>
     </header>
-    <main>
+    <main class="animate__animated animate__zoomIn">
         <form id="invoice-form">
             <section id="invoice-header">
 
@@ -70,7 +70,7 @@
                     </tr>
                     <td class="main-header" id="acc-no-td" colspan="2">
                         <label for="acc-no">Numer konta do przelewu</label>
-                        <input type="text" id="acc-no"
+                        <input type="text" class="animate__animated" id="acc-no"
                             placeholder="Nr konta IBAN (np. 96 1284 1992 9493 8338 1307 1720 5081)">
                     </td>
                     <td class="main-header" colspan="1">
@@ -104,14 +104,14 @@
 
                             <label id="seller-nip-label" for="seller-nip">NIP</label>
                             <div id="seller-nip-div" class="flex-div">
-                                <input type="text" id="seller-nip"
+                                <input type="text" class="animate__animated" id="seller-nip"
                                     placeholder="Wpisz NIP i wciśnij strzałkę obok by pobrać dane firmy z GUS">
                                 <button type="button" class="small-btn" onclick="getSellerDataFromGUS()"
                                     title="Pobierz dane z GUS na podstawie NIP">&nbsp;&#x21e9;&nbsp;</button>
                             </div>
 
                             <label id="seller-pesel-label" for="seller-pesel">PESEL</label>
-                            <input type="text" id="seller-pesel" placeholder="PESEL nabywcy">
+                            <input type="text" class="animate__animated" id="seller-pesel" placeholder="PESEL nabywcy">
 
                             <label for="seller-address">Adres</label>
                             <div class="address-subtable">
@@ -148,14 +148,14 @@
 
                             <label id="customer-nip-label" for="customer-nip">NIP</label>
                             <div id="customer-nip-div" class="flex-div">
-                                <input type="text" id="customer-nip"
+                                <input type="text" class="animate__animated" id="customer-nip"
                                     placeholder="Wpisz NIP i wciśnij strzałkę obok by pobrać dane firmy z GUS">
                                 <button type="button" class="small-btn" onclick="getCustDataFromGUS()"
                                     title="Pobierz dane z GUS na podstawie NIP">&nbsp;&#x21e9;&nbsp;</button>
                             </div>
 
                             <label id="customer-pesel-label" for="customer-pesel">PESEL</label>
-                            <input type="text" id="customer-pesel" placeholder="PESEL nabywcy">
+                            <input type="text" class="animate__animated" id="customer-pesel" placeholder="PESEL nabywcy">
 
                             <label for="customer-address">Adres</label>
                             <div class="address-subtable">

@@ -806,7 +806,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (input.value != '')
             input.value = formattedIban
 
-        isValidIBAN(input.value) ? input.classList.remove('error') : input.classList.add('error')
+        if (isValidIBAN(input.value)) {
+            input.classList.remove('error')
+        }
+        else {
+            input.classList.add('error')
+            input.classList.add('animate__headShake')
+        }
     }
 
     function handleNIPValidation(input) {
@@ -814,25 +820,53 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (input.value != '')
             input.value = formattedNip
-        isValidNIP(input.value) ? input.classList.remove('error') : input.classList.add('error')
+
+        if (isValidNIP(input.value)) {
+            input.classList.remove('error')
+        }
+        else {
+            input.classList.add('error')
+            input.classList.add('animate__headShake')
+        }
     }
 
     function handlePeselValidation(input) {
-        isValidPesel(input.value) ? input.classList.remove('error') : input.classList.add('error')
+        if (isValidPesel(input.value)) {
+            input.classList.remove('error')
+        }
+        else {
+            input.classList.add('error')
+            input.classList.add('animate__headShake')
+        }
     }
 
-    ibanInput.addEventListener('focus', () => ibanInput.classList.remove('error'))
+    ibanInput.addEventListener('focus', () => {
+        ibanInput.classList.remove('error');
+        ibanInput.classList.remove('animate__headShake')
+    })
     ibanInput.addEventListener('blur', () => handleIBANValidation(ibanInput))
 
-    sellerNIPInput.addEventListener('focus', () => sellerNIPInput.classList.remove('error'))
+    sellerNIPInput.addEventListener('focus', () => {
+        sellerNIPInput.classList.remove('error');
+        sellerNIPInput.classList.remove('animate__headShake');
+    })
     sellerNIPInput.addEventListener('blur', () => handleNIPValidation(sellerNIPInput))
 
-    sellerPeselInput.addEventListener('focus', () => sellerPeselInput.classList.remove('error'))
+    sellerPeselInput.addEventListener('focus', () => {
+        sellerPeselInput.classList.remove('error');
+        sellerPeselInput.classList.remove('animate__headShake');
+    })
     sellerPeselInput.addEventListener('blur', () => handlePeselValidation(sellerPeselInput))
 
-    customerPeselInput.addEventListener('focus', () => customerPeselInput.classList.remove('error'))
+    customerPeselInput.addEventListener('focus', () => {
+        customerPeselInput.classList.remove('error');
+        customerPeselInput.classList.remove('animate__headShake');
+    })
     customerPeselInput.addEventListener('blur', () => handlePeselValidation(customerPeselInput))
 
-    customerNIPInput.addEventListener('focus', () => customerNIPInput.classList.remove('error'))
+    customerNIPInput.addEventListener('focus', () => {
+        customerNIPInput.classList.remove('error');
+        customerNIPInput.classList.remove('animate__headShake');
+    })
     customerNIPInput.addEventListener('blur', () => handleNIPValidation(customerNIPInput))
 })
