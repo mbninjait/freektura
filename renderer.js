@@ -506,7 +506,13 @@ function generateInvoice() {
                         (input) => {
                             let td = document.createElement('td')
                             let span = document.createElement('span')
-                            span.innerHTML = input.value
+                            
+                            if(input.classList.contains('decimal'))
+                                span.innerHTML = parseFloat(input.value).toFixed(2)
+                            else
+                                span.innerHTML = input.value
+
+
                             td.appendChild(span)
                             newline.appendChild(td)
                         }
@@ -545,11 +551,11 @@ function generateInvoice() {
                 totalGrossAmount += parseFloat(row.querySelector('td .gross-amount').value) || 0
             })
 
-            const upfrontPaymentAmount = document.getElementById('upfront-payment-amount').value
+            const upfrontPaymentAmount = document.getElementById('upfront-payment-amount')
 
             if (upfrontPaymentAmount > 0) {
                 var amountDue = totalGrossAmount - upfrontPaymentAmount
-                invoice.getElementById('upfront-payment-amount').innerHTML = amountDue + ' ' + document.getElementById('curr-id').value
+                invoice.getElementById('upfront-payment-amount').innerHTML = parseFloat(amountDue).toFixed(2) + ' ' + document.getElementById('curr-id').value
             }
             else {
                 let div = invoice.getElementById('upfront-payment')
@@ -557,7 +563,7 @@ function generateInvoice() {
                 var amountDue = totalGrossAmount
             }
 
-            invoice.getElementById('amount-due').innerHTML = amountDue + ' ' + document.getElementById('curr-id').value
+            invoice.getElementById('amount-due').innerHTML = parseFloat(amountDue).toFixed(2) + ' ' + document.getElementById('curr-id').value
             invoice.getElementById('amount-due-text').innerHTML = amountToTextPLN(amountDue)
 
             //Additional data
