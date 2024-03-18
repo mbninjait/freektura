@@ -364,6 +364,16 @@ function updateSums() {
     document.getElementById('total-gross-amount').value = ceil2digits(totalGrossValue) + ' ' + currencyId
 }
 
+function sparkInputError(input) {
+    input.classList.add('error');
+    input.classList.add('animate__headShake');
+}
+
+function disableInputError(input) {
+    input.classList.remove('error');
+    input.classList.remove('animate__headShake');
+}
+
 /* GENERATING INVOICE */
 
 function amountToText(amount) {
@@ -452,7 +462,7 @@ function amountToTextPLN(amount) {
     return słownieZłotych + ' ' + słownieGroszy
 }
 
-async function loadLogoToLocalStorage() {
+async function saveLogoToLocalStorage() {
     const fileInput = document.getElementById('logo-upload')
     if (fileInput.files.length > 0) {
         const reader = new FileReader()
@@ -460,7 +470,7 @@ async function loadLogoToLocalStorage() {
             const imageUri = e.target.result
             localStorage.setItem('imageUri', imageUri)
         }
-        return reader.readAsDataURL(fileInput.files[0])
+        reader.readAsDataURL(fileInput.files[0])
     }
 }
 
@@ -506,8 +516,8 @@ function generateInvoice() {
                         (input) => {
                             let td = document.createElement('td')
                             let span = document.createElement('span')
-                            
-                            if(input.classList.contains('decimal'))
+
+                            if (input.classList.contains('decimal'))
                                 span.innerHTML = parseFloat(input.value).toFixed(2)
                             else
                                 span.innerHTML = input.value
@@ -786,7 +796,7 @@ toggleCustomerCompanyInputs()
 //Preventing invoice-form to clear it's inputs after submitting
 document.getElementById("invoice-form").addEventListener("submit", (event) => {
     event.preventDefault()
-    loadLogoToLocalStorage().then(() => generateInvoice())
+    generateInvoice()
 })
 
 document.getElementById('logo-upload').addEventListener('change', (event) => {
@@ -797,6 +807,8 @@ document.getElementById('logo-upload').addEventListener('change', (event) => {
         alert('Rozmiar pliku przekracza 5MB. Proszę wybrać nieco mniejszy obrazek')
         event.target.value = ''
     }
+    else
+        saveLogoToLocalStorage()
 })
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -812,13 +824,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (input.value != '')
             input.value = formattedIban
 
-        if (isValidIBAN(input.value)) {
-            input.classList.remove('error')
-        }
-        else {
-            input.classList.add('error')
-            input.classList.add('animate__headShake')
-        }
+        isValidIBAN(input.value) ? disableInputError(input) : sparkInputError(input)
     }
 
     function handleNIPValidation(input) {
@@ -827,52 +833,25 @@ document.addEventListener('DOMContentLoaded', function () {
         if (input.value != '')
             input.value = formattedNip
 
-        if (isValidNIP(input.value)) {
-            input.classList.remove('error')
-        }
-        else {
-            input.classList.add('error')
-            input.classList.add('animate__headShake')
-        }
+        isValidNIP(input.value) ? disableInputError(input) : sparkInputError(input)
     }
 
     function handlePeselValidation(input) {
-        if (isValidPesel(input.value)) {
-            input.classList.remove('error')
-        }
-        else {
-            input.classList.add('error')
-            input.classList.add('animate__headShake')
-        }
+        isValidPesel(input.value) ? disableInputError(input) : sparkInputError(input)
     }
 
-    ibanInput.addEventListener('focus', () => {
-        ibanInput.classList.remove('error');
-        ibanInput.classList.remove('animate__headShake')
-    })
+    ibanInput.addEventListener('focus', () => disableInputError(ibanInput))
     ibanInput.addEventListener('blur', () => handleIBANValidation(ibanInput))
 
-    sellerNIPInput.addEventListener('focus', () => {
-        sellerNIPInput.classList.remove('error');
-        sellerNIPInput.classList.remove('animate__headShake');
-    })
+    sellerNIPInput.addEventListener('focus', () => disableInputError(sellerNIPInput))
     sellerNIPInput.addEventListener('blur', () => handleNIPValidation(sellerNIPInput))
 
-    sellerPeselInput.addEventListener('focus', () => {
-        sellerPeselInput.classList.remove('error');
-        sellerPeselInput.classList.remove('animate__headShake');
-    })
+    sellerPeselInput.addEventListener('focus', () => disableInputError(sellerPeselInput))
     sellerPeselInput.addEventListener('blur', () => handlePeselValidation(sellerPeselInput))
 
-    customerPeselInput.addEventListener('focus', () => {
-        customerPeselInput.classList.remove('error');
-        customerPeselInput.classList.remove('animate__headShake');
-    })
+    customerPeselInput.addEventListener('focus', () => disableInputError(customerPeselInput))
     customerPeselInput.addEventListener('blur', () => handlePeselValidation(customerPeselInput))
 
-    customerNIPInput.addEventListener('focus', () => {
-        customerNIPInput.classList.remove('error');
-        customerNIPInput.classList.remove('animate__headShake');
-    })
+    customerNIPInput.addEventListener('focus', () => disableInputError(customerNIPInput))
     customerNIPInput.addEventListener('blur', () => handleNIPValidation(customerNIPInput))
 })
