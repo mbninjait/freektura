@@ -1,6 +1,6 @@
 {
   "name": "freektura",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Aplikacja do wystawiania faktur w formie PDF",
   "main": "main.js",
   "scripts": {
@@ -19,11 +19,9 @@
     "@electron-forge/maker-zip": "^7.2.0",
     "@electron-forge/plugin-auto-unpack-natives": "^7.2.0",
     "@electron-forge/publisher-github": "^7.2.0",
-    "electron": "^28.2.0",
-    "pdfjs-dist": "^4.0.379"
+    "electron": "^28.2.0"
   },
   "dependencies": {
-    "domino": "^2.1.6",
     "electron-squirrel-startup": "^1.0.0"
   }
 }
