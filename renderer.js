@@ -787,6 +787,11 @@ async function getDataFromGUS(NIP) {
 }
 
 /* CODE EXECUTION STARTS HERE */
+
+//Testing
+window.main.loadUserConfig().then((config) => console.log(config)).catch((error) => console.error('Error:', error));
+//Testing
+
 localStorage.clear()
 insertInvoiceLine()
 updateSums()

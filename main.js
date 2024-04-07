@@ -10,6 +10,29 @@ function openInvoicePrint(event, invoice) {
   shell.openPath(path)
 }
 
+function loadUserConfig() {
+  const filepath = app.getAppPath('userData') + '/config.json';
+
+  return new Promise((resolve, reject) => {
+    fs.readFile(filepath, 'utf8', (err, data) => {
+      if (err) {
+        console.error('Error reading file:', err);
+        reject(err);
+        return;
+      }
+
+      try {
+        const config = JSON.parse(data);
+        resolve(config)
+      }
+      catch (parseError) {
+        console.error('Error parsing JSON:', parseError);
+        reject(parseError);
+      }
+    });
+  });
+}
+
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 800,
@@ -25,11 +48,16 @@ const createWindow = () => {
   win.loadFile('index.html')
 
   //devTools
-  //win.webContents.openDevTools();
+  win.webContents.openDevTools();
 }
 
 app.whenReady().then(() => {
+  //One-way communication (renderer -> main)
   ipcMain.on('open-invoice-print', openInvoicePrint)
+
+  //Two-way communication (renderer <-> main)
+  ipcMain.handle('load-user-config', loadUserConfig)
+
   createWindow()
 
   app.on('activate', () => {

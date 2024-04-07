@@ -1,7 +1,11 @@
 const { contextBridge, ipcRenderer } = require('electron/renderer')
 
 contextBridge.exposeInMainWorld('main', {
-  openInvoicePrint: (invoice) => ipcRenderer.send('open-invoice-print', invoice)
+  //One-way communication (renderer -> main)
+  openInvoicePrint: (invoice) => ipcRenderer.send('open-invoice-print', invoice),
+
+  //Two-way communication (renderer <-> main)
+  loadUserConfig: () => ipcRenderer.invoke('load-user-config')
 })
 
 contextBridge.exposeInMainWorld('versions', {

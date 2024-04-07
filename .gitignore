@@ -132,4 +132,5 @@ dist
 # my own files
 preview.html
 env.json
+config.json
 .DS_Store
