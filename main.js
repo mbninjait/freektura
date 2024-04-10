@@ -4,10 +4,10 @@ const { shell } = require('electron')
 const fs = require('fs')
 
 function openInvoicePrint(event, invoice) {
-  const path = 'preview.html'
+  const filepath = app.getAppPath('userData') + '/preview.html';
 
-  fs.writeFileSync(path, invoice)
-  shell.openPath(path)
+  fs.writeFileSync(filepath, invoice)
+  shell.openPath(filepath)
 }
 
 function loadUserConfig() {
@@ -48,7 +48,7 @@ const createWindow = () => {
   win.loadFile('index.html')
 
   //devTools
-  win.webContents.openDevTools();
+  //win.webContents.openDevTools();
 }
 
 app.whenReady().then(() => {

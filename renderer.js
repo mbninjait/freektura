@@ -374,6 +374,36 @@ function disableInputError(input) {
     input.classList.remove('animate__headShake');
 }
 
+function loadUserConfig() {
+    window.main.loadUserConfig().then(config => {
+        //Radio buttons
+        config.radios.forEach(value => {
+            let radioButton = document.getElementById(value);
+            radioButton.checked = true;
+            radioButton.dispatchEvent(new Event('change'));
+        });
+
+        //Select-option input's
+        config.selectOptions.forEach(obj => {
+            let key = Object.keys(obj)[0];
+            let value = obj[key];
+            let selectInput = document.getElementById(key);
+            selectInput.value = value;
+            selectInput.dispatchEvent(new Event('change'));
+        });
+
+        //Regular inputs
+        config.inputs.forEach(obj => {
+            let key = Object.keys(obj)[0];
+            let value = obj[key];
+            let input = document.getElementById(key);
+            input.dispatchEvent(new Event('focus'));
+            input.value = value;
+            input.dispatchEvent(new Event('blur'));
+        });
+    });
+}
+
 /* GENERATING INVOICE */
 
 function amountToText(amount) {
@@ -787,11 +817,6 @@ async function getDataFromGUS(NIP) {
 }
 
 /* CODE EXECUTION STARTS HERE */
-
-//Testing
-window.main.loadUserConfig().then((config) => console.log(config)).catch((error) => console.error('Error:', error));
-//Testing
-
 localStorage.clear()
 insertInvoiceLine()
 updateSums()
@@ -860,3 +885,10 @@ document.addEventListener('DOMContentLoaded', function () {
     customerNIPInput.addEventListener('focus', () => disableInputError(customerNIPInput))
     customerNIPInput.addEventListener('blur', () => handleNIPValidation(customerNIPInput))
 })
+
+//Testing
+loadUserConfig()
+//Testing
+
+
+/* CODE EXECUTION ENDS HERE */
