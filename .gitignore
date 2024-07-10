@@ -133,4 +133,5 @@ dist
 preview.html
 env.json
 config.json
+logo.*
 .DS_Store

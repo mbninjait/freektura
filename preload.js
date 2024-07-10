@@ -5,7 +5,7 @@ contextBridge.exposeInMainWorld('main', {
   openInvoicePrint: (invoice) => ipcRenderer.send('open-invoice-print', invoice),
 
   //Two-way communication (renderer <-> main)
-  loadUserConfig: () => ipcRenderer.invoke('load-user-config')
+  loadUserConfig: () => ipcRenderer.invoke('load-user-config'),
 })
 
 contextBridge.exposeInMainWorld('versions', {

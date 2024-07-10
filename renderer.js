@@ -86,8 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //Testing
 loadUserConfig();
-loadUserLogo();
-//Testing
 
 /* CODE EXECUTION ENDS HERE */
 
@@ -514,10 +512,6 @@ function loadUserConfig() {
   });
 }
 
-function loadUserLogo() {
-  window.main.loadUserLogo().then((image) => saveLogoToLocalStorage(image));
-}
-
 /* GENERATING INVOICE */
 
 function amountToText(amount) {
@@ -741,12 +735,17 @@ function generateInvoice() {
 
       elementIdsToCopy.forEach(
         (element) =>
-          (invoice.getElementById(element).innerHTML =
-            document.getElementById(element).value),
+        (invoice.getElementById(element).innerHTML =
+          document.getElementById(element).value),
       );
 
       //Logo
-      invoice.getElementById("logo-img").src = localStorage.getItem("imageUri");
+      const logoImg = localStorage.getItem("imageUri");
+
+      if (logoImg === null)
+        invoice.getElementById("logo-img").src = "logo.png"
+      else
+        invoice.getElementById("logo-img").src = logoImg
 
       //Amount due
       let totalGrossAmount = 0;
