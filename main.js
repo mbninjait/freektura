@@ -4,14 +4,14 @@ const { shell } = require('electron')
 const fs = require('fs')
 
 function openInvoicePrint(event, invoice) {
-  const filepath = app.getAppPath('userData') + '/preview.html';
+  const filepath = 'preview.html';
 
   fs.writeFileSync(filepath, invoice)
   shell.openPath(filepath)
 }
 
 function loadUserConfig() {
-  const filepath = app.getAppPath('userData') + '/config.json';
+  const filepath = process.env.PORTABLE_EXECUTABLE_DIR + '/config.json'
 
   return new Promise((resolve, reject) => {
     fs.readFile(filepath, 'utf8', (err, data) => {
@@ -31,6 +31,11 @@ function loadUserConfig() {
       }
     });
   });
+}
+
+function getAppPath() {
+  const filepath = process.env.PORTABLE_EXECUTABLE_DIR
+  return new Promise((resolve, reject) => { resolve(filepath) })
 }
 
 const createWindow = () => {
@@ -57,6 +62,7 @@ app.whenReady().then(() => {
 
   //Two-way communication (renderer <-> main)
   ipcMain.handle('load-user-config', loadUserConfig)
+  ipcMain.handle('get-app-path', getAppPath)
 
   createWindow()
 

@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld('main', {
 
   //Two-way communication (renderer <-> main)
   loadUserConfig: () => ipcRenderer.invoke('load-user-config'),
+  getAppPath: () => ipcRenderer.invoke('get-app-path'),
 })
 
 contextBridge.exposeInMainWorld('versions', {

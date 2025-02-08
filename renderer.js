@@ -802,8 +802,12 @@ function generateInvoice() {
       //Logo
       const logoImg = localStorage.getItem("imageUri");
 
-      if (logoImg === null)
-        invoice.getElementById("logo-img").src = "logo.png"
+      if (logoImg === null) {
+        window.main.getAppPath().then((path) => {
+          const logoPath = path.replaceAll('\\', '/') + '/logo.png'
+          invoice.getElementById("logo-img").src = logoPath
+        })
+      }
       else
         invoice.getElementById("logo-img").src = logoImg
 

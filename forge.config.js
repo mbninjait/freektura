@@ -5,7 +5,7 @@ module.exports = {
   },
   rebuildConfig: {},
   makers: [
-    {
+    /*{
       name: '@electron-forge/maker-squirrel',
       config: {},
     },
@@ -19,6 +19,10 @@ module.exports = {
     },
     {
       name: '@electron-forge/maker-rpm',
+      config: {},
+    },*/
+    {
+      name: "@rabbitholesyndrome/electron-forge-maker-portable",
       config: {},
     },
   ],
