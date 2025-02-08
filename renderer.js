@@ -4,6 +4,7 @@ insertInvoiceLine();
 updateSums();
 toggleSellerCompanyInputs();
 toggleCustomerCompanyInputs();
+togglePayerCompanyInputs();
 
 //Preventing invoice-form to clear it's inputs after submitting
 document.getElementById("invoice-form").addEventListener("submit", (event) => {
@@ -24,9 +25,11 @@ document.getElementById("logo-upload").addEventListener("change", (event) => {
 document.addEventListener("DOMContentLoaded", function () {
   const ibanInput = document.getElementById("acc-no");
   const sellerPeselInput = document.getElementById("seller-pesel");
-  const customerPeselInput = document.getElementById("customer-pesel");
   const sellerNIPInput = document.getElementById("seller-nip");
+  const customerPeselInput = document.getElementById("customer-pesel");
   const customerNIPInput = document.getElementById("customer-nip");
+  const payerPeselInput = document.getElementById("payer-pesel");
+  const payerNIPInput = document.getElementById("payer-nip");
 
   function handleIBANValidation(input) {
     const formattedIban = formatIBAN(input.value);
@@ -82,9 +85,22 @@ document.addEventListener("DOMContentLoaded", function () {
   customerNIPInput.addEventListener("blur", () =>
     handleNIPValidation(customerNIPInput),
   );
+
+  payerPeselInput.addEventListener("focus", () =>
+    disableInputError(payerPeselInput),
+  );
+  payerPeselInput.addEventListener("blur", () =>
+    handlePeselValidation(payerPeselInput),
+  );
+
+  payerNIPInput.addEventListener("focus", () =>
+    disableInputError(payerNIPInput),
+  );
+  payerNIPInput.addEventListener("blur", () =>
+    handleNIPValidation(payerNIPInput),
+  );
 });
 
-//Testing
 loadUserConfig();
 
 /* CODE EXECUTION ENDS HERE */
@@ -343,6 +359,50 @@ function toggleCustomerPersonInputs() {
   label = document.getElementById("customer-pesel-label");
   label.style.display = "";
   input = document.getElementById("customer-pesel");
+  input.style.display = "";
+}
+
+function togglePayerCompanyInputs() {
+  let input = document.getElementById("payer-company-name");
+  input.value = "";
+  input.style.display = "";
+
+  input = document.getElementById("payer-person-name");
+  input.value = "";
+  input.style.display = "none";
+
+  let label = document.getElementById("payer-nip-label");
+  label.style.display = "";
+
+  let div = document.getElementById("payer-nip-div");
+  div.style.display = "";
+
+  label = document.getElementById("payer-pesel-label");
+  label.style.display = "none";
+  input = document.getElementById("payer-pesel");
+  input.value = "";
+  input.style.display = "none";
+}
+
+function togglePayerPersonInputs() {
+  let input = document.getElementById("payer-company-name");
+  input.value = "";
+  input.style.display = "none";
+
+  input = document.getElementById("payer-person-name");
+  input.value = "";
+  input.style.display = "";
+
+  let label = document.getElementById("payer-nip-label");
+  label.style.display = "none";
+
+  let div = document.getElementById("payer-nip-div");
+  div.style.display = "none";
+  document.querySelector("#payer-nip-div input").value = "";
+
+  label = document.getElementById("payer-pesel-label");
+  label.style.display = "";
+  input = document.getElementById("payer-pesel");
   input.style.display = "";
 }
 
@@ -845,6 +905,41 @@ function generateInvoice() {
         " " +
         document.getElementById("customer-address-zip").value;
 
+      //Payer data
+      if (!document.getElementById("payer-different-than-cust").checked)
+        invoice.getElementById("payer-data-row").remove();
+      else {
+      let payerNipOrPesel = invoice.getElementById("payer-nip-or-pesel");
+      let payerName = invoice.getElementById("payer-name");
+      if (document.getElementById("payer-company-btn").checked) {
+        payerNipOrPesel.innerHTML =
+          "NIP: " + document.getElementById("payer-nip").value;
+        payerName.innerHTML = document.getElementById(
+          "payer-company-name",
+        ).value;
+      } else if (document.getElementById("payer-person-btn").checked) {
+        payerNipOrPesel.innerHTML =
+          "PESEL: " + document.getElementById("payer-pesel").value;
+        payerName.innerHTML = document.getElementById(
+          "payer-person-name",
+        ).value;
+      }
+
+      invoice.getElementById("payer-address1").innerHTML =
+        document.getElementById("payer-address-street").value +
+        " " +
+        document.getElementById("payer-address-building-no").value;
+
+      if (document.getElementById("payer-address-apartment-no").value != "")
+        invoice.getElementById("payer-address1").innerHTML +=
+          "/" + document.getElementById("payer-address-apartment-no").value;
+
+      invoice.getElementById("payer-address2").innerHTML =
+        document.getElementById("payer-address-city").value +
+        " " +
+        document.getElementById("payer-address-zip").value;
+      }
+
       //Opening a new tab with ready-to-print invoice
       //let invoiceWindow = window.open()
       //invoiceWindow.document.write(new XMLSerializer().serializeToString(invoice))
@@ -916,6 +1011,34 @@ function getCustDataFromGUS() {
       response.ApartmentNo;
     document.getElementById("customer-address-city").value = response.City;
     document.getElementById("customer-address-zip").value = response.ZipCode;
+  });
+}
+
+function getPayerDataFromGUS() {
+  const nip = document.getElementById("customer-nip").value;
+  getDataFromGUS(nip).then((response) => {
+    if (response === null) return;
+
+    if (response.ErrorCode) {
+      errorMsg =
+        "Coś poszło nie tak podczas podczas pobierania danych z systemu GUS!\n\n" +
+        "NIP: " +
+        nip +
+        "\n\n" +
+        response.ErrorMsg;
+
+      alert(errorMsg);
+      return;
+    }
+
+    document.getElementById("payer-company-name").value = response.Name;
+    document.getElementById("payer-address-street").value = response.Street;
+    document.getElementById("payer-address-building-no").value =
+      response.BuildingNo;
+    document.getElementById("payer-address-apartment-no").value =
+      response.ApartmentNo;
+    document.getElementById("payer-address-city").value = response.City;
+    document.getElementById("payer-address-zip").value = response.ZipCode;
   });
 }
 

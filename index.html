@@ -131,7 +131,7 @@
 
                         <!--Dane nabywcy-->
                         <td class="main-header" id="customer-data" colspan="2">
-                            <label>Nabywca</label>
+                            <label>Odbiorca</label>
                             <br>
 
                             <div class="company-person-container">
@@ -154,7 +154,7 @@
                             </div>
 
                             <label id="customer-pesel-label" for="customer-pesel">PESEL</label>
-                            <input type="text" class="animate__animated" id="customer-pesel" placeholder="PESEL nabywcy">
+                            <input type="text" class="animate__animated" id="customer-pesel" placeholder="PESEL odbiorcy">
 
                             <label for="customer-address">Adres</label>
                             <div class="address-subtable">
@@ -169,6 +169,61 @@
                             <div class="address-subtable">
                                 <input type="text" class="address-city" id="customer-address-city" placeholder="Miasto">
                                 <input type="text" class="address-zip" id="customer-address-zip" pattern="\d{2}-\d{3}"
+                                    placeholder="Kod pocztowy">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="main-header" colspan="2">
+                        <!--Puste pod sprzedawcą-->
+                        </td>
+
+                        <!--Dane płatnika-->
+                        <td class="main-header" id="payer-data" colspan="2">
+                            <label>Płatnik</label>
+                            <br>
+
+                            <label for="payer-different-than-cust-label">Inny niż nabywca</label>
+                            <label id="payer-different-than-cust-label" class="switch">
+                                <input id="payer-different-than-cust" type="checkbox">
+                                <span class="slider round"></span>
+                            </label>
+
+                            <div class="company-person-container">
+                                <input type="radio" id="payer-company-btn" name="payer" value="company"
+                                    onchange="togglePayerCompanyInputs()" checked>
+                                <label for="company">Firma</label>
+                                <input type="radio" id="payer-person-btn" name="payer" value="person"
+                                    onchange="togglePayerPersonInputs()">
+                                <label for="person">Osoba</label>
+                            </div>
+                            <input type="text" id="payer-company-name" placeholder="Nazwa firmy">
+                            <input type="text" id="payer-person-name" placeholder="Imię i nazwisko">
+
+                            <label id="payer-nip-label" for="payer-nip">NIP</label>
+                            <div id="payer-nip-div" class="flex-div">
+                                <input type="text" class="animate__animated" id="payer-nip"
+                                    placeholder="Wpisz NIP i wciśnij strzałkę obok by pobrać dane firmy z GUS">
+                                <button type="button" class="small-btn" onclick="getPayerDataFromGUS()"
+                                    title="Pobierz dane z GUS na podstawie NIP">&nbsp;&#x21e9;&nbsp;</button>
+                            </div>
+
+                            <label id="payer-pesel-label" for="payer-pesel">PESEL</label>
+                            <input type="text" class="animate__animated" id="payer-pesel" placeholder="PESEL płatnika">
+
+                            <label for="payer-address">Adres</label>
+                            <div class="address-subtable">
+                                <input type="text" class="address-street" id="payer-address-street"
+                                    placeholder="Ulica">
+                                <input type="text" class="address-building-no" id="payer-address-building-no"
+                                    placeholder="Nr budynku">
+                                <label>/</label>
+                                <input type="text" class="address-apartment-no" id="payer-address-apartment-no"
+                                    placeholder="Nr lokalu">
+                            </div>
+                            <div class="address-subtable">
+                                <input type="text" class="address-city" id="payer-address-city" placeholder="Miasto">
+                                <input type="text" class="address-zip" id="payer-address-zip" pattern="\d{2}-\d{3}"
                                     placeholder="Kod pocztowy">
                             </div>
                         </td>
@@ -232,5 +287,4 @@
 
     <script src="./renderer.js"></script>
 </body>
-
 </html>

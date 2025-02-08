@@ -81,9 +81,9 @@
             min-height: 27.9cm;
 
             padding-left: 2cm;
-            padding-top: 2cm;
+            padding-top: 0cm;
             padding-right: 2cm;
-            padding-bottom: 2cm;
+            padding-bottom: 0cm;
         }
 
         @page {
@@ -264,12 +264,26 @@
                     <td class="separator"></td>
                     <td class="customer-data" colspan="1">
                         <div class="label-div">
-                            <label>Nabywca</label>
+                            <label>Odbiorca</label>
                         </div>
                         <span id="customer-name"></span>
                         <span id="customer-nip-or-pesel"></span>
                         <span id="customer-address1"></span>
                         <span id="customer-address2"></span>
+                    </td>
+                </tr>
+                <tr id="payer-data-row">
+                    <td class="seller-data" colspan="1">
+                    </td>
+                    <td class="separator"></td>
+                    <td class="customer-data" colspan="1">
+                        <div class="label-div">
+                            <label>Płatnik</label>
+                        </div>
+                        <span id="payer-name"></span>
+                        <span id="payer-nip-or-pesel"></span>
+                        <span id="payer-address1"></span>
+                        <span id="payer-address2"></span>
                     </td>
                 </tr>
             </tbody>
