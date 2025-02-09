@@ -1019,7 +1019,7 @@ function getCustDataFromGUS() {
 }
 
 function getPayerDataFromGUS() {
-  const nip = document.getElementById("customer-nip").value;
+  const nip = document.getElementById("payer-nip").value;
   getDataFromGUS(nip).then((response) => {
     if (response === null) return;
 
